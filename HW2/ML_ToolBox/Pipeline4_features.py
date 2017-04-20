@@ -18,10 +18,10 @@ def display_importance(df, label, features):
     importances = clf.feature_importances_
     sorted_idx = np.argsort(importances)
     padding = np.arange(len(features)) + 0.5
+    pl.barh(padding, importances[sorted_idx], align='center')
+    pl.yticks(padding, np.asarray(features)[sorted_idx])
     pl.xlabel("Relative Importance")
     pl.title("Variable Importance")
-    pl.barh(padding, importances[sorted_idx], align='center')
-    pl.yticks(padding, features[sorted_idx])
     
 def discretize(df, col, n, cut='quantile'):
     '''
@@ -31,7 +31,7 @@ def discretize(df, col, n, cut='quantile'):
     updates dataframe accordingly    
     '''
     if cut == 'quantile':
-        df[col + '_bucket'] = pd.cut(df[col], n)
+        df[col + '_bucket'] = pd.qcut(df[col], n)
     else:
         raise ValueError('cut format not currently available')
 
@@ -40,4 +40,5 @@ def gen_dummies(df, col):
     '''
     Given a dataframe and certain column, returns a set of dummies
     '''
-    return pd.get_dummies(df[col], prefix = [col])
+    for i, value in enumerate(df[col].unique()):
+        df[col + '_{}'.format(i)] = df[col] == value

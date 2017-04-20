@@ -33,7 +33,7 @@ def classify(df, features, label, cl_method):
     X_train, X_test, y_train, y_test = train_test_split(X, 
                                                         Y, 
                                                         test_size=0.2, 
-                                                        random_state=99)
+                                                        random_state=2)
     
     model.fit(X_train, y_train)
 
