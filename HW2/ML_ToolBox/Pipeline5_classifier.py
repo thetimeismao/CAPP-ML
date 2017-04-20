@@ -35,6 +35,6 @@ def classify(df, features, label, cl_method):
                                                         test_size=0.2, 
                                                         random_state=2)
     
-    model.fit(X_train, y_train)
+    model = model.fit(X_train, y_train)
 
     return model, X_test, y_test
